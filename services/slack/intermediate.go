@@ -397,11 +397,13 @@ func (t *Transformer) TransformPosts(slackExport *SlackExport, attachmentsDir st
 				}
 				if (post.File != nil || post.Files != nil) && !skipAttachments {
 					if post.File != nil {
+						t.Logger.Warn("Found a file of a post: %+v", post)
 						err := addFileToPost(post.File, slackExport.Uploads, newPost, attachmentsDir)
 						if err != nil {
 							t.Logger.WithError(err).Error("Failed to add file to post")
 						}
 					} else if post.Files != nil {
+						t.Logger.Warn("Found files of a post: %+v", post)
 						for _, file := range post.Files {
 							err := addFileToPost(file, slackExport.Uploads, newPost, attachmentsDir)
 							if err != nil {
